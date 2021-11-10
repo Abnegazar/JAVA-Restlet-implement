@@ -1,0 +1,90 @@
+
+TP-Restlet
+
+*****
+* Objectif
+*****
+
+L'objectif principal de ce TP est de construire une API REST de type Twitter
+en utilisant le framework Restlet. (http://restlet.com/).
+
+*****
+* Découverte
+*****
+
+Explorez les sources et familiarisez vous avec l'architecture de l'application.
+Pour cela, vous pouvez suivre l'ordre suivant:
+    - les objets internes
+    - la base de données en mémoire
+    - les ressources
+    - l'application
+
+*****
+* Déploiement
+*****
+
+La compilation des fichier sources et la génération du JAR de l'application
+se fera à travers l'outil maven. Si vous avez besoin de l'installer,
+rendez-vous à l'adresse https://maven.apache.org/. Maven est déjà présent
+sur les machines de l'ISTIC. Sous Eclipse, le projet peut être importé
+en utilisant la fonction "Importer -> Projet Maven existant" et en choisissant
+le répertoire qui contient le fichier "pom.xml" (que vous pouvez étudier pour
+voir sa structure). Vous devez ensuite construire la librairie en configurant
+votre Build avec l'option "package". Une fois la librairie construite, vous pouvez
+démarrer le serveur en exécutant le fichier "Main.java".
+
+Le serveur doit maintenant tourner, et être prêt à recevoir vos requêtes.
+Essayons les requêtes suivantes, que vous pouvez lancer depuis un autre
+terminal:
+
+    $ curl http://localhost:8124/users
+    $ curl -X POST -H 'Content-type:application/json' -H 'Accept:application/json' -d '{"name":"peter", "age":30}' http://localhost:8124/users
+
+Vous pouvez aussi ouvrir un navigateur et entrer l'adresse 'http://localhost:8124/users'
+
+Observez le résultat des requêtes du côté des clients (curl et navigateur) et
+l'output côté serveur. Le fichier 'test.sh' a été ajouté à des fins de test.
+
+
+*****
+* API
+*****
+
+Nous souhaitons mettre en place l'API suivante:
+
+URI                     | commande   | description
+--------------------------------------------------------------------
+/users                  | GET        | retourne la liste des utilisateurs
+/users                  | POST       | ajoute un utilisateur
+/users/{userId}         | GET        | retourne la description de l'utilisateur {userId}
+/users/{userId}         | DELETE     | supprime l'utilisateur {userId}
+/users/{userId}/tweets  | POST       | ajoute un tweet à la liste des tweets de l'utilisateur {userId}
+/users/{userId}/tweets  | GET        | retourne la liste des tweets de l'utilisateur {userId}
+/users/many             | POST       | Ajoute une liste d'utilisateurs
+
+Une partie de l'API est actuellement supportée par l'application. A vous de la compléter.
+
+
+*****
+* Roadmap primaire
+*****
+
+* Ajouter la classe Tweet aux 'internals' et modifiez la classe User
+pour qu'un utilisateur ait sa propre liste de tweets.
+
+* Ajouter une classe TweetsResource vers laquelle les requêtes pour l'URI
+/users/{userId}/tweets seront dirigées
+
+* Rajoutez l'URI /users/{userId}/tweets et son mapping vers la classe
+TweetsResource.
+
+* Testez régulièrement
+
+*****
+* Roadmap secondaire
+*****
+
+* Ajouter la fonctionnalité de suppression d'un utilisateur
+
+* Ajouter une URI /users/tweets qui retourne l'ensemble des tweets de tous les
+utilisateurs sur réception d'une requête de type GET
